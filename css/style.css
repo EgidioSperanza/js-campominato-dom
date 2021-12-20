@@ -5,7 +5,7 @@
 }
 #choise_difficulty, #score_game {
   display: flex;
-  padding: 25px;
+  padding: 15px;
 }
 #choise_difficulty {
   justify-content: center;
