@@ -32,7 +32,7 @@ function generateBox(outGrid, gridClass, gridNum, color) {
 
 function colorBox(box, color, num) {
   let safeclick=0;
-  box.addEventListener("click", ()=> {
+  box.addEventListener("click", function () {
     if (bombs.includes(num)) {
       loseGame=true;
       showBomb(grid);
@@ -42,15 +42,15 @@ function colorBox(box, color, num) {
       if (safeclick===gridNumBox) 
         winnerPage();
     }
-    box.classList.add(color);
+    this.classList.add(color);
     console.log(num); //DEBUG
   });
 }
 
 function showBomb(parent){
-    for (let i = 0; i <= parent.childElementCount; i++){
+    for (let i = 1; i <= parent.childElementCount; i++){
       if (bombs.includes(i)){
-        parent.children.item(i-1).classList.add("paint_grid_red");
+        parent.children.item(i).classList.add("paint_grid_red");
       }
     }
 }
