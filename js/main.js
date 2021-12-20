@@ -49,6 +49,7 @@ function colorBox(box, color, num) {
 
 function showBomb(parent){
     for (let i = 1; i <= parent.childElementCount; i++){
+      // parent.children.item(i).removeEventListener("click", false);
       if (bombs.includes(i)){
         parent.children.item(i).classList.add("paint_grid_red");
       }
