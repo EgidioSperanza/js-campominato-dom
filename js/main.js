@@ -36,12 +36,13 @@ function colorBox(box, color, num) {
     if (bombs.includes(num)) {
       loseGame=true;
       showBomb(grid);
-    } else {
+    } 
+    if (!loseGame) {
       color = "paint_grid_azure";
       safeclick++;
       if (safeclick===gridNumBox) 
         winnerPage();
-    }
+    } 
     this.classList.add(color);
     console.log(num); //DEBUG
   });
@@ -49,9 +50,9 @@ function colorBox(box, color, num) {
 
 function showBomb(parent){
     for (let i = 1; i <= parent.childElementCount; i++){
-      // parent.children.item(i).removeEventListener("click", false);
+      // parent.children.item(i-1).removeEventListener("click", false);
       if (bombs.includes(i)){
-        parent.children.item(i).classList.add("paint_grid_red");
+        parent.children.item(i-1).classList.add("paint_grid_red");
       }
     }
 }
