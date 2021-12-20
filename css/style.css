@@ -3,10 +3,17 @@
   padding: 0;
   box-sizing: border-box;
 }
-#choise_difficulty {
+#choise_difficulty, #score_game {
   display: flex;
-  justify-content: center;
   padding: 25px;
+}
+#choise_difficulty {
+  justify-content: center;
+}
+#score_game {
+  margin: 0 auto;
+  width: 80vh;
+  justify-content: space-between;
 }
 button {
   width: 90px;
@@ -21,7 +28,7 @@ button.active{
 #grid {
   display: flex;
   flex-wrap: wrap;
-  width: 90vh;
+  width: 80vh;
   margin: 0 auto;
 }
 #grid > div {
@@ -51,16 +58,16 @@ button.active{
   border-top: 1px solid black;
 }
 .box_normal_100 {
-  width: calc(90vh / 10);
-  height: calc(90vh / 10);
+  width: calc(80vh / 10);
+  height: calc(80vh / 10);
 }
 .box_medium_81 {
-  width: calc((90vh / 9));
+  width: calc((80vh / 9));
   height: calc((90vh / 9));
 }
 .box_hard_49 {
-  width: calc((90vh / 7));
-  height: calc((90vh / 7));
+  width: calc((80vh / 7));
+  height: calc((80vh / 7));
 }
 .paint_grid_azure {
   background-color:lightskyblue;

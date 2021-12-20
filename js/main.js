@@ -1,12 +1,15 @@
 const getRandom = (min, max) => Math.round(Math.random() * (max - min)) + min;
 const grid = document.getElementById("grid");
 const choiseGame = document.getElementById("choise_difficulty");
+const score = document.getElementById("score");
 let gridNumBox = 100;
 let gameBoxClass = "box_normal_100";
 const qtyBomb = 16;
 let bombs;
+let safeClick = 0;
 
 function nBomb() {
+  safeClick=0;
   const numbers = [];
   while (numbers.length < qtyBomb) {
     const randomNum = getRandom(1, gridNumBox);
@@ -14,7 +17,7 @@ function nBomb() {
       numbers.push(randomNum);
     }
   }
-  console.log(numbers)//DEBUG
+  console.log(numbers); //DEBUG
   return numbers;
 }
 
@@ -27,12 +30,19 @@ function generateBox(outGrid, gridClass, gridNum) {
 }
 
 function colorBox(box, color, num) {
+  const maxSafeClick = gridNumBox - qtyBomb;
   box.addEventListener("click", function () {
     if (bombs.includes(num)) {
       color = "paint_grid_red";
+      safeClick=-1;
     } else {
       color = "paint_grid_azure";
+      while (safeClick <= maxSafeClick) {
+        safeClick++;
+      } 
     }
+    scoreGame(safeClick, maxSafeClick, 100);
+    gameOverType(safeClick, maxSafeClick);
     this.classList.add(color);
     console.log(num); //DEBUG
   });
@@ -40,7 +50,7 @@ function colorBox(box, color, num) {
 
 function difficultyGame(selection) {
   generateGrid();
-  bombs =nBomb();
+  bombs = nBomb();
   for (let i = 0; i < selection.childElementCount; i++) {
     selection.children.item(i).addEventListener("click", function () {
       removeActiveClass();
@@ -67,7 +77,7 @@ function difficultyGame(selection) {
         default:
       }
       generateGrid();
-      bombs =nBomb();
+      bombs = nBomb();
     });
   }
 }
@@ -82,6 +92,20 @@ function generateGrid() {
 function removeActiveClass() {
   const activeBtn = document.querySelector("button.active");
   activeBtn.classList.remove("active");
+}
+
+function scoreGame (click, maxClick, maxScore){
+  let currentScore=(maxClick*click)/maxScore;
+  score.innerText = (`${currentScore}/${maxScore}`)
+}
+function gameOverType(click, maxClick){
+  if (click===-1){
+    //LOSEGAME
+  } else if (click=== maxClick){
+    //WINGAME
+  }else{
+    //SHOW SCORE
+  }
 }
 
 difficultyGame(choiseGame);
