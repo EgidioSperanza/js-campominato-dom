@@ -43,7 +43,7 @@ function checkBox(box, num, color) {
       if (safeClick === (gridNumBox-qtyBomb)) {
         gameOver = true;
       }
-      if (!gameOver && (safeClick !== (gridNumBox-qtyBomb)) {
+      if (!gameOver && safeClick < (gridNumBox-qtyBomb)) {
         this.classList.add(color);
         safeClick++;
       } else {
