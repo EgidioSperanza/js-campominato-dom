@@ -1,3 +1,24 @@
+const getRandom = (min, max) => Math.round(Math.random() * (max - min)) + min;
+const grid = document.getElementById("grid");
+const choiseGame = document.getElementById("choise_difficulty");
+let gridNumBox = 100;
+let gameBoxClass = "box_normal_100";
+const qtyBomb = 16;
+
+function nBomb (){
+  const numbers = [];
+  while(numbers.length < qtyBomb){
+      const randomNum = getRandom(1,gridNumBox)
+      if(!numbers.includes(randomNum)){
+          numbers.push(randomNum);
+      }
+  }
+  numbers.forEach(n => {
+      console.log(n);
+      
+  });
+}
+
 function generateBox(outGrid, gridClass, gridNum) {
   const square = document.createElement("div");
   square.className = gridClass;
@@ -56,10 +77,5 @@ function removeActiveClass() {
   const activeBtn = document.querySelector("button.active");
   activeBtn.classList.remove("active");
 }
-
-const grid = document.getElementById("grid");
-const choiseGame = document.getElementById("choise_difficulty");
-let gridNumBox = 100;
-let gameBoxClass = "box_normal_100";
 
 difficultyGame(choiseGame);
