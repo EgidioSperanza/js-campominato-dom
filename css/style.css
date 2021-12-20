@@ -75,6 +75,9 @@ button.active{
 .paint_grid_red{
   background-color: red;
 }
+.hide{
+  display:none;
+}
 
 @media only screen and (max-width: 576px) {
   #grid {

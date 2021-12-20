@@ -95,7 +95,7 @@ function removeActiveClass() {
 }
 
 function scoreGame (click, maxClick, maxScore){
-  let currentScore=(maxClick*click)/maxScore;
+  let currentScore=Math.round((maxClick*click)/maxScore);
   score.innerText = (`${currentScore}/${maxScore}`)
 }
 function gameOverType(click, maxClick){
