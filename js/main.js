@@ -6,10 +6,11 @@ let gridNumBox = 100;
 let gameBoxClass = "box_normal_100";
 const qtyBomb = 16;
 let bombs;
-let safeClick = 0;
+let color;
+let loseGame;
+let myFun = function(){ };
 
 function nBomb() {
-  safeClick=0;
   const numbers = [];
   while (numbers.length < qtyBomb) {
     const randomNum = getRandom(1, gridNumBox);
@@ -21,31 +22,37 @@ function nBomb() {
   return numbers;
 }
 
-function generateBox(outGrid, gridClass, gridNum) {
+function generateBox(outGrid, gridClass, gridNum, color) {
   const square = document.createElement("div");
   square.className = gridClass;
   outGrid.append(square);
   square.innerText = gridNum;
-  colorBox(square, "", gridNum);
+  colorBox(square, color, gridNum);
 }
 
 function colorBox(box, color, num) {
-  const maxSafeClick = gridNumBox - qtyBomb;
-  box.addEventListener("click", function () {
+  let safeclick=0;
+  box.addEventListener("click", ()=> {
     if (bombs.includes(num)) {
-      color = "paint_grid_red";
-      safeClick=-1;
+      loseGame=true;
+      showBomb(grid);
     } else {
       color = "paint_grid_azure";
-      while (safeClick <= maxSafeClick) {
-        safeClick++;
-      } 
+      safeclick++;
+      if (safeclick===gridNumBox) 
+        winnerPage();
     }
-    scoreGame(safeClick, maxSafeClick, 100);
-    gameOverType(safeClick, maxSafeClick);
-    this.classList.add(color);
+    box.classList.add(color);
     console.log(num); //DEBUG
   });
+}
+
+function showBomb(parent){
+    for (let i = 0; i <= parent.childElementCount; i++){
+      if (bombs.includes(i)){
+        parent.children.item(i-1).classList.add("paint_grid_red");
+      }
+    }
 }
 
 function difficultyGame(selection) {
@@ -84,6 +91,7 @@ function difficultyGame(selection) {
 
 function generateGrid() {
   grid.innerHTML = "";
+  loseGame=false;
   for (let i = 1; i <= gridNumBox; i++) {
     generateBox(grid, gameBoxClass, i);
   }
@@ -92,23 +100,6 @@ function generateGrid() {
 function removeActiveClass() {
   const activeBtn = document.querySelector("button.active");
   activeBtn.classList.remove("active");
-}
-
-function scoreGame (click, maxClick, maxScore){
-  let currentScore=Math.round((maxClick*click)/maxScore);
-  score.innerText = (`${currentScore}/${maxScore}`)
-}
-function gameOverType(click, maxClick){
-  if (click===-1){
-    //LOSEGAME
-    const loseGame = document.createElement("div");  
-    loseGame.className="lose";
-    grid.append(loseGame);
-  } else if (click=== maxClick){
-    //WINGAME
-  }else{
-    //SHOW SCORE
-  }
 }
 
 difficultyGame(choiseGame);

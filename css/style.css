@@ -79,7 +79,6 @@ button.active{
 .hide{
   display:none;
 }
-
 .lose{
   position: absolute;
   top:0;
@@ -105,4 +104,9 @@ button.active{
     width: calc((90vw / 7));
     height: calc((90vw / 7));
   }
+  .lose{
+    width: 90vw;
+    height: 90vw;
+  }
+  
 }
