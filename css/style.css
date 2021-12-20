@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#choise_difficulty {
+  display: flex;
+  justify-content: center;
+  padding: 25px;
+}
+button {
+  width: 90px;
+  height: 40px;
+  margin: 0 20px;
+  cursor: pointer;
+}
+button.active{
+  background-color: teal;
+  color: white;
+}
+#grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90vh;
+  margin: 0 auto;
+}
+#grid > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
+#grid > div.box_normal_100:nth-child(10n + 1) {
+  border-left: 1px solid black;
+}
+#grid > div.box_normal_100:nth-child(-n + 10) {
+  border-top: 1px solid black;
+}
+#grid > div.box_medium_81:nth-child(9n + 1) {
+  border-left: 1px solid black;
+}
+#grid > div.box_medium_81:nth-child(-n + 9) {
+  border-top: 1px solid black;
+}
+#grid > div.box_hard_49:nth-child(7n + 1) {
+  border-left: 1px solid black;
+}
+#grid > div.box_hard_49:nth-child(-n + 7) {
+  border-top: 1px solid black;
+}
+.box_normal_100 {
+  width: calc(90vh / 10);
+  height: calc(90vh / 10);
+}
+.box_medium_81 {
+  width: calc((90vh / 9));
+  height: calc((90vh / 9));
+}
+.box_hard_49 {
+  width: calc((90vh / 7));
+  height: calc((90vh / 7));
+}
+.paint_grid_azure {
+  background-color: teal;
+}
+
+@media only screen and (max-width: 576px) {
+  #grid {
+    width: calc(90vw + 2px);
+  }
+  .box_normal_100 {
+    width: calc((90vw / 10));
+    height: calc((90vw / 10));
+  }
+  .box_medium_81 {
+    width: calc((90vw / 9));
+    height: calc((90vw / 9));
+  }
+  .box_hard_49 {
+    width: calc((90vw / 7));
+    height: calc((90vw / 7));
+  }
+}
