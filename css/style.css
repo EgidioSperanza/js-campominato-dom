@@ -15,6 +15,34 @@
   width: 80vh;
   justify-content: space-between;
 }
+#score{
+  background-color: black;
+  color: red;
+  font-size: 20px;
+  padding: 5px 5px 5px 25px;
+  min-height: 30px;
+  min-width: 50px;
+}
+.game_over_type, .lose, .win, .epic_fail{
+  padding: 25px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-size: 60px;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.win{
+  background-color: green;
+}
+.epic_fail{
+  background-color: darkred;
+}
+.lose{
+  background-color: rgba(149, 23, 23, 0.4);
+}
 button {
   width: 90px;
   height: 40px;
@@ -79,14 +107,6 @@ button.active{
 .hide{
   display:none;
 }
-.lose{
-  position: absolute;
-  top:0;
-  left:0;
-  width: 80vh;
-  height: 80vh;
-  background-color: red;
-}
 
 @media only screen and (max-width: 576px) {
   #grid {
@@ -104,7 +124,7 @@ button.active{
     width: calc((90vw / 7));
     height: calc((90vw / 7));
   }
-  .lose{
+  .game_over_type{
     width: 90vw;
     height: 90vw;
   }

@@ -2,13 +2,15 @@ const getRandom = (min, max) => Math.round(Math.random() * (max - min)) + min;
 const grid = document.getElementById("grid");
 const choiseGame = document.getElementById("choise_difficulty");
 const score = document.getElementById("score");
+const reset = document.querySelector("button.hide");
+const safeColor = "paint_grid_azure";
 let gridNumBox = 100;
 let gameBoxClass = "box_normal_100";
 const qtyBomb = 16;
 let bombs;
 let color;
-let loseGame;
-let myFun = function(){ };
+let gameOver;
+let safeClick = 0;
 
 function nBomb() {
   const numbers = [];
@@ -27,36 +29,79 @@ function generateBox(outGrid, gridClass, gridNum, color) {
   square.className = gridClass;
   outGrid.append(square);
   square.innerText = gridNum;
-  colorBox(square, color, gridNum);
+  checkBox(square, gridNum, safeColor);
 }
 
-function colorBox(box, color, num) {
-  let safeclick=0;
-  box.addEventListener("click", function () {
-    if (bombs.includes(num)) {
-      loseGame=true;
-      showBomb(grid);
-    } 
-    if (!loseGame) {
-      color = "paint_grid_azure";
-      safeclick++;
-      if (safeclick===gridNumBox) 
-        winnerPage();
-    } 
-    this.classList.add(color);
-    console.log(num); //DEBUG
-  });
-}
-
-function showBomb(parent){
-    for (let i = 1; i <= parent.childElementCount; i++){
-      // parent.children.item(i-1).removeEventListener("click", false);
-      if (bombs.includes(i)){
-        parent.children.item(i-1).classList.add("paint_grid_red");
+function checkBox(box, num, color) {
+  box.addEventListener(
+    "click",
+    function () {
+      if (bombs.includes(num)) {
+        gameOver = true;
+        showBomb(grid);
       }
-    }
+      if (safeClick === gridNumBox) {
+        gameOver = true;
+      }
+      if (!gameOver) {
+        this.classList.add(color);
+        safeClick++;
+      } else {
+        printGameOverType(safeClick);
+        reset.classList.remove("hide");
+        reset.addEventListener("click", () => {
+          generateGrid();
+        });
+      }
+      printScore(calculateScore(safeClick));
+      console.log(num); //DEBUG
+    },
+    false
+  );
 }
 
+function calculateScore(playerClick) {
+  const changeoverScore = Math.round(100 / (gridNumBox - qtyBomb));
+  // console.log("punteggio massimo;" + changeoverScore*(gridNumBox-qtyBomb));//DEBUG
+  // console.log(changeoverScore*playerClick);//DEBUG
+  return changeoverScore * playerClick;
+}
+function printScore(x) {
+  score.innerText = x;
+}
+function printGameOverType(click) {
+  const gameOverBox = document.createElement("div");
+  gameOverBox.className="game_over_type";
+  grid.append(gameOverBox);
+  if (click === gridNumBox - qtyBomb) {
+    gameOverBox.innerText = "YOU WIN!";
+    gameOverBox.className="win";
+  } else if (click === 0) {
+    gameOverBox.innerText = "EPIC FAIL!!!";
+    gameOverBox.className="epic_fail";
+  } else {
+    gameOverBox.innerText = "YOU LOSE!";
+    gameOverBox.className="lose";
+  }
+}
+function showBomb(parent) {
+  for (let i = 1; i <= parent.childElementCount; i++) {
+    if (bombs.includes(i)) {
+      parent.children.item(i - 1).classList.add("paint_grid_red");
+    }
+  }
+}
+
+function clickedBox(clickable, index, color) {
+  const clicked = [];
+  while (clickable.length <= gridNumBox - qtyBomb) {
+    let clickedBox = index;
+    if (!clicked.includes(clickedBox)) {
+      clicked.push(clickedBox);
+      clickable.classList.add(color);
+    }
+  }
+}
 function difficultyGame(selection) {
   generateGrid();
   bombs = nBomb();
@@ -93,7 +138,10 @@ function difficultyGame(selection) {
 
 function generateGrid() {
   grid.innerHTML = "";
-  loseGame=false;
+  gameOver = false;
+  safeClick = 0;
+  score.innerText = "";
+  reset.classList.add("hide");
   for (let i = 1; i <= gridNumBox; i++) {
     generateBox(grid, gameBoxClass, i);
   }
