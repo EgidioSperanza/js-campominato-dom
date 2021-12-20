@@ -72,7 +72,9 @@ function printScore(x) {
 function printGameOverType(click) {
   const gameOverBox = document.createElement("div");
   gameOverBox.className="game_over_type";
-  grid.append(gameOverBox);
+  if(grid.childElementCount===gridNumBox)
+    grid.append(gameOverBox);
+  else return;
   if (click === gridNumBox - qtyBomb) {
     gameOverBox.innerText = "YOU WIN!";
     gameOverBox.className="win";
