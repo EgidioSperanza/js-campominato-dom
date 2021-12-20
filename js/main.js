@@ -40,7 +40,7 @@ function checkBox(box, num, color) {
         gameOver = true;
         showBomb(grid);
       }
-      if (safeClick === gridNumBox) {
+      if (safeClick === (gridNumBox-qtyBomb)) {
         gameOver = true;
       }
       if (!gameOver) {
