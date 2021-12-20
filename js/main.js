@@ -19,12 +19,12 @@ function nBomb (){
   });
 }
 
-function generateBox(outGrid, gridClass, gridNum, paint) {
+function generateBox(outGrid, gridClass, gridNum) {
   const square = document.createElement("div");
   square.className = gridClass;
   outGrid.append(square);
   square.innerText = gridNum;
-  paint(square, "paint_grid_azure")
+  colorBox(square, "paint_grid_azure")
 }
 
 function colorBox(box, color){
@@ -34,11 +34,11 @@ function colorBox(box, color){
 
 }
 
-function difficultyGame(selection, displayGrid,toggleActive) {
-  displayGrid(generateBox);
+function difficultyGame(selection) {
+  generateGrid();
   for (let i = 0; i < selection.childElementCount; i++) {
     selection.children.item(i).addEventListener("click", function () {
-      toggleActive("button.active","active");
+      removeActiveClass();
       console.log(this.id); //DEBUG
       switch (this.id) {
         case "hard_difficulty":
@@ -61,25 +61,21 @@ function difficultyGame(selection, displayGrid,toggleActive) {
           break;
         default:
       }
-      displayGrid(generateBox);
+      generateGrid();
     });
   }
 }
 
-function generateGrid(gridElement) {
+function generateGrid() {
   grid.innerHTML = "";
   for (let i = 1; i <= gridNumBox; i++) {
-    gridElement(grid, gameBoxClass, i, colorBox);
+    generateBox(grid, gameBoxClass, i);
   }
 }
 
-function removeActiveClass(btnActive, activeClass) {
-  const activeBtn = document.querySelector(btnActive);
-  activeBtn.classList.remove(activeClass);
+function removeActiveClass() {
+  const activeBtn = document.querySelector("button.active");
+  activeBtn.classList.remove("active");
 }
 
-<<<<<<< HEAD
 difficultyGame(choiseGame);
-=======
-difficultyGame(choiseGame, generateGrid, removeActiveClass);
->>>>>>> 516ffe9e257e2ec56fdfa3e4007003d4b01b4476
