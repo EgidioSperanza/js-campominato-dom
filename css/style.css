@@ -63,7 +63,10 @@ button.active{
   height: calc((90vh / 7));
 }
 .paint_grid_azure {
-  background-color: teal;
+  background-color:lightskyblue;
+}
+.paint_grid_red{
+  background-color: red;
 }
 
 @media only screen and (max-width: 576px) {

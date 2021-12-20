@@ -4,19 +4,18 @@ const choiseGame = document.getElementById("choise_difficulty");
 let gridNumBox = 100;
 let gameBoxClass = "box_normal_100";
 const qtyBomb = 16;
+let bombs;
 
-function nBomb (){
+function nBomb() {
   const numbers = [];
-  while(numbers.length < qtyBomb){
-      const randomNum = getRandom(1,gridNumBox)
-      if(!numbers.includes(randomNum)){
-          numbers.push(randomNum);
-      }
+  while (numbers.length < qtyBomb) {
+    const randomNum = getRandom(1, gridNumBox);
+    if (!numbers.includes(randomNum)) {
+      numbers.push(randomNum);
+    }
   }
-  numbers.forEach(n => {
-      console.log(n);
-      
-  });
+  console.log(numbers)//DEBUG
+  return numbers;
 }
 
 function generateBox(outGrid, gridClass, gridNum) {
@@ -24,18 +23,24 @@ function generateBox(outGrid, gridClass, gridNum) {
   square.className = gridClass;
   outGrid.append(square);
   square.innerText = gridNum;
-  colorBox(square, "paint_grid_azure")
+  colorBox(square, "", gridNum);
 }
 
-function colorBox(box, color){
+function colorBox(box, color, num) {
   box.addEventListener("click", function () {
+    if (bombs.includes(num)) {
+      color = "paint_grid_red";
+    } else {
+      color = "paint_grid_azure";
+    }
     this.classList.add(color);
+    console.log(num); //DEBUG
   });
-
 }
 
 function difficultyGame(selection) {
   generateGrid();
+  bombs =nBomb();
   for (let i = 0; i < selection.childElementCount; i++) {
     selection.children.item(i).addEventListener("click", function () {
       removeActiveClass();
@@ -62,6 +67,7 @@ function difficultyGame(selection) {
         default:
       }
       generateGrid();
+      bombs =nBomb();
     });
   }
 }
