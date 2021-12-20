@@ -101,6 +101,9 @@ function scoreGame (click, maxClick, maxScore){
 function gameOverType(click, maxClick){
   if (click===-1){
     //LOSEGAME
+    const loseGame = document.createElement("div");  
+    loseGame.className="lose";
+    grid.append(loseGame);
   } else if (click=== maxClick){
     //WINGAME
   }else{

@@ -26,6 +26,7 @@ button.active{
   color: white;
 }
 #grid {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   width: 80vh;
@@ -77,6 +78,15 @@ button.active{
 }
 .hide{
   display:none;
+}
+
+.lose{
+  position: absolute;
+  top:0;
+  left:0;
+  width: 80vh;
+  height: 80vh;
+  background-color: red;
 }
 
 @media only screen and (max-width: 576px) {
