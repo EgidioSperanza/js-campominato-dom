@@ -10,6 +10,7 @@ const qtyBomb = 16;
 let bombs;
 let color;
 let gameOver;
+const clickable=[];
 let safeClick = 0;
 
 function nBomb() {
@@ -29,6 +30,7 @@ function generateBox(outGrid, gridClass, gridNum, color) {
   square.className = gridClass;
   outGrid.append(square);
   square.innerText = gridNum;
+  square.id= gridNum;
   checkBox(square, gridNum, safeColor);
 }
 
@@ -39,19 +41,17 @@ function checkBox(box, num, color) {
       if (bombs.includes(num)) {
         gameOver = true;
         showBomb(grid);
-      }
-      if (safeClick === (gridNumBox-qtyBomb)) {
-        gameOver = true;
-      }
-      if (!gameOver && safeClick < (gridNumBox-qtyBomb)) {
-        this.classList.add(color);
-        safeClick++;
-      } else {
         printGameOverType(safeClick);
-        reset.classList.remove("hide");
-        reset.addEventListener("click", () => {
-          generateGrid();
-        });
+      }else if(safeClick <= (gridNumBox-qtyBomb) && clickable.length===(gridNumBox-qtyBomb)) {
+        gameOver = true;
+        printGameOverType(safeClick);
+      }else if (safeClick < (gridNumBox-qtyBomb) && !(clickable.includes(this.id))) {
+          this.classList.add(color);
+          safeClick++;
+          clickable.push(this.id);
+          console.log(clickable, safeClick);
+      } else{
+        console.log("già cliccato");
       }
       printScore(calculateScore(safeClick));
       console.log(num); //DEBUG
@@ -75,16 +75,22 @@ function printGameOverType(click) {
   if(grid.childElementCount===gridNumBox)
     grid.append(gameOverBox);
   else return;
-  if (click === gridNumBox - qtyBomb) {
-    gameOverBox.innerText = "YOU WIN!";
-    gameOverBox.className="win";
-  } else if (click === 0) {
-    gameOverBox.innerText = "EPIC FAIL!!!";
-    gameOverBox.className="epic_fail";
-  } else {
-    gameOverBox.innerText = "YOU LOSE!";
-    gameOverBox.className="lose";
+  if (gameOver){
+    if (click === (gridNumBox - qtyBomb)) {
+      gameOverBox.innerText = "YOU WIN!";
+      gameOverBox.className="win";
+    } else if (click === 0 ) {
+      gameOverBox.innerText = "EPIC FAIL!!!";
+      gameOverBox.className="epic_fail";
+    } else{
+      gameOverBox.innerText = "YOU LOSE!";
+      gameOverBox.className="lose";
+    } 
   }
+  reset.classList.remove("hide");
+  reset.addEventListener("click", () => {
+    generateGrid();
+  });
 }
 function showBomb(parent) {
   for (let i = 1; i <= parent.childElementCount; i++) {
@@ -141,6 +147,7 @@ function difficultyGame(selection) {
 function generateGrid() {
   grid.innerHTML = "";
   gameOver = false;
+  const clickable=[];
   safeClick = 0;
   score.innerText = "";
   reset.classList.add("hide");
